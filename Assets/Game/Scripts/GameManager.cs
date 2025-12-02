@@ -23,6 +23,8 @@ public class GameManager : MonoBehaviour
 
     public Image ProgressBarFill;
     public AudioSource audioSource;
+
+    private PlayerScript playerScript;
     #endregion
 
     #region Music Info Struct and Data
@@ -46,6 +48,7 @@ public class GameManager : MonoBehaviour
     #endregion
     void Awake()
     {
+        playerScript = GameObject.FindWithTag("Player").GetComponent<PlayerScript>();
         currentTime = 0;
         pauseTimer = false;
         isPaused = false;
@@ -83,9 +86,15 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         CheckAndPlayNextSong();
+        UpdateProgressBar();
+        if(playerScript.died == true)
+        {
+            pauseTimer = true;
+            return;
+        }
         Timer();
         TimerDisplay();
-        UpdateProgressBar();
+        
     }
 
     void Timer()
@@ -134,5 +143,7 @@ public class GameManager : MonoBehaviour
             PlayRandomSong();
         }
     }
+
+    
     
 }
