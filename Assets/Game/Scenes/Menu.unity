@@ -403,8 +403,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 285112556}
-  - component: {fileID: 285112555}
-  - component: {fileID: 285112554}
+  - component: {fileID: 285112558}
   - component: {fileID: 285112557}
   m_Layer: 0
   m_Name: PlayFabManager
@@ -413,40 +412,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &285112554
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 285112553}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81f548cbbbfbe6748949cf0ff9af0c83, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SignUpScript
-  emailInput: {fileID: 6919739245518629160}
-  passwordInput: {fileID: 1942578826323996220}
-  confirmPasswordInput: {fileID: 8681759605624816772}
-  usernameInput: {fileID: 1236033648}
-  avatarUrlInput: {fileID: 875828092}
-  messageText: {fileID: 91693381}
---- !u!114 &285112555
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 285112553}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42b35b3b4e1be4046bcf15ee678c9f8e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::LoginScript
-  emailInput: {fileID: 716044361931551739}
-  passwordInput: {fileID: 6602986420478282304}
-  messageText: {fileID: 838616263}
-  hasLoggedIn: 0
 --- !u!4 &285112556
 Transform:
   m_ObjectHideFlags: 0
@@ -473,7 +438,29 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b45229af25556124eb32cf8094e64243, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: '::'
+  m_EditorClassIdentifier: Assembly-CSharp::ScoreScript
+--- !u!114 &285112558
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 285112553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81f548cbbbfbe6748949cf0ff9af0c83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SignUpScript
+  registerEmailInput: {fileID: 6919739245518629160}
+  registerPasswordInput: {fileID: 1942578826323996220}
+  confirmPasswordInput: {fileID: 8681759605624816772}
+  registerUsernameInput: {fileID: 1236033648}
+  loginEmailInput: {fileID: 716044361931551739}
+  loginPasswordInput: {fileID: 6602986420478282304}
+  avatarUrlInput: {fileID: 875828092}
+  loginMessageText: {fileID: 838616263}
+  registerMessageText: {fileID: 91693381}
+  hasLoggedIn: 0
 --- !u!1 &355791476
 GameObject:
   m_ObjectHideFlags: 0
@@ -2083,7 +2070,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 4957738452516413598}
         m_TargetAssemblyTypeName: MenuScript, Assembly-CSharp
-        m_MethodName: ToggleSignUpCanvas
+        m_MethodName: LoadNextSceneAsync
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3246,7 +3233,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 285112554}
+      - m_Target: {fileID: 285112558}
         m_TargetAssemblyTypeName: SignUpScript, Assembly-CSharp
         m_MethodName: OnRegisterButtonClicked
         m_Mode: 1
@@ -3783,8 +3770,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 285112555}
-        m_TargetAssemblyTypeName: LoginScript, Assembly-CSharp
+      - m_Target: {fileID: 285112558}
+        m_TargetAssemblyTypeName: SignUpScript, Assembly-CSharp
         m_MethodName: OnLoginButtonClicked
         m_Mode: 1
         m_Arguments:

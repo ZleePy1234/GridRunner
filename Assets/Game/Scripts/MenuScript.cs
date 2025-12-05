@@ -1,4 +1,7 @@
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class MenuScript : MonoBehaviour
 {
@@ -6,11 +9,11 @@ public class MenuScript : MonoBehaviour
     public GameObject signUpCanvas;
     public GameObject loginSignUpScreen;
     public GameObject playButton;
-    private LoginScript loginScript;
+    private SignUpScript loginScript;
 
     void Awake()
     {
-        loginScript = GameObject.FindWithTag("PlayFabManager").GetComponent<LoginScript>();
+        loginScript = GameObject.FindWithTag("PlayFabManager").GetComponent<SignUpScript>();
     }
 
 
@@ -19,7 +22,14 @@ public class MenuScript : MonoBehaviour
         loginSignUpScreen.SetActive(!loginSignUpScreen.activeSelf);
         loginCanvas.SetActive(false);
         signUpCanvas.SetActive(false);
-        playButton.SetActive(loginScript.hasLoggedIn);
+        if(loginScript.hasLoggedIn == true)
+        {
+            playButton.SetActive(true);
+        }
+        else
+        {
+            playButton.SetActive(false);
+        }
     }
     public void ToggleLoginCanvas()
     {
@@ -32,5 +42,28 @@ public class MenuScript : MonoBehaviour
         signUpCanvas.SetActive(!signUpCanvas.activeSelf);
         loginCanvas.SetActive(false);
         loginSignUpScreen.SetActive(false);
+    }
+
+    public void LoadNextSceneAsync()
+    {
+        StartCoroutine(LoadNextSceneCoroutine());
+    }
+
+    private IEnumerator LoadNextSceneCoroutine()
+    {
+        int nextIndex = SceneManager.GetActiveScene().buildIndex + 1;
+        if (nextIndex >= SceneManager.sceneCountInBuildSettings)
+        {
+            Debug.LogWarning("MenuScript: No next scene in build settings.");
+            yield break;
+        }
+
+        AsyncOperation op = SceneManager.LoadSceneAsync(nextIndex);
+        // allowSceneActivation left true so scene activates automatically when done
+        while (!op.isDone)
+        {
+            // optional: use op.progress (0..0.9) for progress UI
+            yield return null;
+        }
     }
 }

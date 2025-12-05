@@ -1,24 +1,39 @@
 using UnityEngine;
+using PlayFab;
+using PlayFab.ClientModels;
+using System.Collections.Generic;
 public class ScoreScript : MonoBehaviour
 {
-    public static ScoreScript instance;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    private GameManager gameManager;
+
     void Awake()
     {
-        if(instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
         
+    }
+    public void UpdateScore(float finalTime)
+    {
+        float multTime = finalTime * 100;
+        int intTime = Mathf.RoundToInt(multTime);
+        gameManager ??= GameObject.FindWithTag("GameController").GetComponent<GameManager>();
+        UpdatePlayerStatisticsRequest request = new UpdatePlayerStatisticsRequest
+        {
+            Statistics = new List<StatisticUpdate>
+            {
+                new StatisticUpdate
+                {
+                    StatisticName = "Best Time",
+                    Value = intTime
+                }   
+            }
+        };
+        PlayFabClientAPI.UpdatePlayerStatistics(request, OnUpdateSuccess, OnUpdateError);
+    }
+    void OnUpdateSuccess(UpdatePlayerStatisticsResult result)
+    {
+        Debug.Log("Score updated successfully.");
+    }
+    void OnUpdateError(PlayFabError error)
+    {
+        Debug.Log("PlayFab UpdatePlayerStatistics failed: " + error.GenerateErrorReport());
     }
 }

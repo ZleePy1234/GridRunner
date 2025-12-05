@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
     public AudioSource audioSource;
 
     private PlayerScript playerScript;
+    private ScoreScript scoreScript;
     #endregion
 
     #region Music Info Struct and Data
@@ -54,6 +55,7 @@ public class GameManager : MonoBehaviour
         isPaused = false;
         AddMusic();
         PlayRandomSong();
+        scoreScript = GameObject.FindWithTag("PlayFabManager").GetComponent<ScoreScript>();
     }
 
     void AddMusic()
@@ -87,11 +89,13 @@ public class GameManager : MonoBehaviour
     {
         CheckAndPlayNextSong();
         UpdateProgressBar();
-        if(playerScript.died == true)
+        if(playerScript.died == true && pauseTimer == false)
         {
             pauseTimer = true;
+            scoreScript.UpdateScore(currentTime);
             return;
         }
+        if(pauseTimer == true) return;
         Timer();
         TimerDisplay();
         
@@ -109,7 +113,7 @@ public class GameManager : MonoBehaviour
     void TimerDisplay()
     {
         TimeSpan timeSpan = TimeSpan.FromSeconds(currentTime);
-        timerText.text = timeSpan.ToString(@"m\.s\.ff");
+        timerText.text = timeSpan.ToString(@"s\.ff");
     }
 
     public void PlayRandomSong()
